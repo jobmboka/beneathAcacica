@@ -712,11 +712,6 @@ function tick(){
 }
 tick(); setInterval(tick, 1000);
 
-/* ── RSVP Counter ── */
-let rsvpCount = parseInt(localStorage.getItem('rsvpCount') || '0');
-function updateCounter(){ document.getElementById('rsvp-count').textContent = rsvpCount; }
-updateCounter();
-
 /* ── Payment Selection ── */
 const PRICES = { entry: 500, book: 2000, combo: 2000 };
 const LABELS = { entry: 'Entry — KES 500', book: 'Book Pre-order — KES 2,000', combo: 'Entry + Book — KES 2,000' };
