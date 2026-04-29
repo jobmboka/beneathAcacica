@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beneath The Acacia — Book Launch 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,600&family=Cinzel:wght@400;600;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  /* ── EMAILJS ── */
+  const EMAILJS_PUBLIC_KEY  = "Sx3hmTDOST4Q3LMAX";
+  const EMAILJS_SERVICE_ID  = "service_w5x13wn";
+  const EMAILJS_TEMPLATE_ID = "template_rco7ccb";
+  (function(){ emailjs.init(EMAILJS_PUBLIC_KEY); })();
+
+  /* ── BACKEND URL — replace after deploying to Render ── */
+  const API_BASE = "https://beneath-acacia-api.onrender.com";
+</script>
+
+<style>
+/* ── ROOT ── */
+:root {
+  --gold:#C8952A; --gold-light:#E8B84B; --gold-pale:#F5D98A;
+  --burnt:#8B3A10; --teal:#1E5059; --teal-mid:#2A6B77;
+  --dark:#0B1A20; --charcoal:#121F27;
+  --text:#EDE0C4; --text-muted:rgba(237,224,196,0.6); --white:#FDFAF4;
+  --green:#2A7A4B; --green-light:#3AAA6A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--text);font-family:'EB Garamond',Georgia,serif;overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:20px 56px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(11,26,32,0.92) 0%,transparent 100%);backdrop-filter:blur(4px);}
+.nav-brand{font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:5px;color:var(--gold-light);text-transform:uppercase;}
+.nav-links{display:flex;gap:40px;list-style:none;}
+.nav-links a{font-family:'Raleway',sans-serif;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s;}
+.nav-links a:hover{color:var(--gold-light);}
+.nav-rsvp-btn{font-family:'Raleway',sans-serif;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;font-weight:600;padding:9px 22px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark);border:none;cursor:pointer;text-decoration:none;transition:transform 0.3s,box-shadow 0.3s;}
+.nav-rsvp-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(200,149,42,0.35);}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:flex-start;overflow:hidden;}
+.hero-bg-img{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1600&q=80');background-size:cover;background-position:center right;z-index:0;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(11,26,32,0.97) 0%,rgba(11,26,32,0.88) 28%,rgba(11,26,32,0.55) 52%,rgba(11,26,32,0.15) 70%,transparent 100%);z-index:1;}
+.hero-bottom-fade{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to bottom,transparent,var(--dark));z-index:2;}
+.hero-content{position:relative;z-index:10;padding:140px 56px 100px;max-width:620px;}
+.hero-eyebrow{font-family:'Raleway',sans-serif;font-size:0.7rem;letter-spacing:8px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;opacity:0;animation:fadeUp 0.8s ease 0.3s forwards;}
+.hero-title{font-family:'Cinzel',serif;font-size:clamp(2.8rem,6vw,5.5rem);font-weight:700;line-height:1.05;color:var(--white);text-shadow:0 2px 40px rgba(0,0,0,0.8);opacity:0;animation:fadeUp 1s ease 0.5s forwards;}
+.hero-title em{display:block;font-style:italic;font-family:'EB Garamond',serif;font-size:0.52em;font-weight:400;color:var(--gold-pale);letter-spacing:4px;margin-bottom:6px;}
+.hero-author{font-family:'EB Garamond',serif;font-size:clamp(1rem,2vw,1.35rem);font-weight:400;font-style:italic;color:var(--text-muted);margin-top:18px;letter-spacing:2px;opacity:0;animation:fadeUp 0.8s ease 0.8s forwards;}
+.hero-rule{width:60px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:28px 0;opacity:0;animation:fadeUp 0.8s ease 0.9s forwards;}
+.hero-tagline{font-size:clamp(1rem,1.6vw,1.2rem);line-height:1.85;color:var(--text-muted);font-style:italic;margin-bottom:42px;max-width:460px;opacity:0;animation:fadeUp 0.8s ease 1s forwards;}
+.hero-btns{display:flex;gap:18px;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s ease 1.2s forwards;}
+.hero-stats{display:flex;gap:36px;margin-top:52px;opacity:0;animation:fadeUp 0.8s ease 1.5s forwards;}
+.hstat{border-left:1px solid rgba(200,149,42,0.3);padding-left:18px;}
+.hstat-num{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--gold-light);display:block;line-height:1;}
+.hstat-lbl{font-family:'Raleway',sans-serif;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-top:4px;}
+
+/* ── BUTTONS ── */
+.btn-gold{font-family:'Raleway',sans-serif;font-size:0.72rem;letter-spacing:4px;text-transform:uppercase;font-weight:600;padding:15px 34px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark);border:none;cursor:pointer;text-decoration:none;transition:transform 0.3s,box-shadow 0.3s;display:inline-block;}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(200,149,42,0.4);}
+.btn-outline{font-family:'Raleway',sans-serif;font-size:0.72rem;letter-spacing:4px;text-transform:uppercase;font-weight:400;padding:14px 32px;background:transparent;color:var(--text);border:1px solid rgba(237,224,196,0.3);text-decoration:none;transition:border-color 0.3s,color 0.3s,transform 0.3s;display:inline-block;}
+.btn-outline:hover{border-color:var(--gold-light);color:var(--gold-light);transform:translateY(-3px);}
+
+/* ── SCROLL CUE ── */
+.scroll-cue{position:absolute;bottom:40px;left:56px;z-index:10;display:flex;align-items:center;gap:14px;opacity:0;animation:fadeUp 0.8s ease 1.8s forwards;}
+.scroll-cue span{font-family:'Raleway',sans-serif;font-size:0.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--text-muted);}
+.scroll-line{width:48px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);animation:expand 2s ease-in-out infinite;}
+@keyframes expand{0%,100%{width:20px;opacity:0.4;}50%{width:60px;opacity:1;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── DIVIDER ── */
+.gold-rule{height:1px;background:linear-gradient(90deg,transparent 0%,var(--gold) 30%,var(--gold-light) 50%,var(--gold) 70%,transparent 100%);opacity:0.4;}
+
+/* ── SECTIONS ── */
+section{padding:100px 56px;}
+.s-label{font-family:'Raleway',sans-serif;font-size:0.65rem;letter-spacing:8px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.s-title{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:600;color:var(--white);line-height:1.2;}
+.s-sub{font-size:1.1rem;font-style:italic;color:var(--text-muted);margin-top:10px;}
+
+/* ── COUNTDOWN ── */
+.countdown-section{background:linear-gradient(180deg,var(--dark) 0%,var(--charcoal) 100%);text-align:center;}
+.cd-grid{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:56px;}
+.cd-block{display:flex;flex-direction:column;align-items:center;padding:36px 32px 28px;background:rgba(255,255,255,0.02);border:1px solid rgba(200,149,42,0.18);min-width:120px;position:relative;}
+.cd-block::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);}
+.cd-num{font-family:'Cinzel',serif;font-size:clamp(2.8rem,6vw,4.5rem);color:var(--gold-light);line-height:1;text-shadow:0 0 30px rgba(232,184,75,0.3);}
+.cd-lbl{font-family:'Raleway',sans-serif;font-size:0.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--text-muted);margin-top:10px;}
+.cd-sep{font-family:'Cinzel',serif;font-size:2.8rem;color:var(--gold);align-self:center;padding-bottom:24px;opacity:0.4;}
+
+/* ── EVENT ── */
+.event-section{background:var(--charcoal);}
+.event-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.event-details-list{margin-top:48px;display:flex;flex-direction:column;gap:30px;}
+.ev-item{display:flex;gap:22px;align-items:flex-start;}
+.ev-icon{width:46px;height:46px;flex-shrink:0;border:1px solid rgba(200,149,42,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;background:rgba(200,149,42,0.04);}
+.ev-text h4{font-family:'Raleway',sans-serif;font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.ev-text p{font-size:1.15rem;color:var(--white);line-height:1.4;}
+.ev-text p.sub{font-size:0.92rem;font-style:italic;color:var(--text-muted);margin-top:2px;}
+
+/* ── BOOK MOCKUP ── */
+.book-mockup{display:flex;justify-content:center;align-items:center;position:relative;}
+.book-img-wrap{position:relative;width:280px;}
+.book-cover{width:100%;height:380px;background:linear-gradient(160deg,var(--teal) 0%,var(--dark) 100%);border-radius:3px 10px 10px 3px;box-shadow:-8px 0 0 rgba(0,0,0,0.5),-16px 8px 40px rgba(0,0,0,0.7),20px 20px 60px rgba(0,0,0,0.5),0 0 80px rgba(200,149,42,0.12);transform:perspective(900px) rotateY(-10deg);transition:transform 0.5s,box-shadow 0.5s;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;position:relative;overflow:hidden;}
+.book-cover::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-pale),var(--gold));}
+.book-cover::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-pale),var(--gold));}
+.book-cover:hover{transform:perspective(900px) rotateY(0deg);box-shadow:-4px 0 0 rgba(0,0,0,0.3),30px 30px 80px rgba(0,0,0,0.4),0 0 100px rgba(200,149,42,0.2);}
+.book-tree{font-size:3rem;margin-bottom:16px;filter:brightness(1.4);}
+.book-title-cover{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold-light);text-align:center;letter-spacing:2px;line-height:1.4;margin-bottom:8px;}
+.book-sub-cover{font-family:'EB Garamond',serif;font-size:0.85rem;font-style:italic;color:var(--text-muted);text-align:center;}
+.book-author-cover{position:absolute;bottom:28px;font-family:'Raleway',sans-serif;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);opacity:0.8;}
+.book-glow{position:absolute;inset:-30px;background:radial-gradient(circle,rgba(200,149,42,0.15) 0%,transparent 70%);z-index:-1;animation:glow 3s ease-in-out infinite;}
+@keyframes glow{0%,100%{opacity:0.5;}50%{opacity:1;}}
+
+/* ── ABOUT ── */
+.about-section{background:linear-gradient(180deg,var(--charcoal) 0%,var(--dark) 100%);}
+.about-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:start;}
+.author-card{background:rgba(255,255,255,0.02);border:1px solid rgba(200,149,42,0.15);padding:36px;}
+.author-avatar{width:100%;aspect-ratio:1;background:linear-gradient(180deg,rgba(42,107,119,0.25) 0%,rgba(139,58,16,0.2) 100%);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(200,149,42,0.12);margin-bottom:24px;font-size:5rem;}
+.author-card h4{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--white);margin-bottom:8px;}
+.author-card p{font-size:0.95rem;line-height:1.7;color:var(--text-muted);}
+.about-text p{font-size:1.15rem;line-height:1.95;color:rgba(237,224,196,0.82);margin-bottom:22px;}
+.about-text p:first-of-type{font-size:1.3rem;font-style:italic;color:var(--text);}
+.about-text blockquote{border-left:2px solid var(--gold);padding-left:24px;margin:30px 0;font-size:1.2rem;font-style:italic;color:var(--gold-pale);line-height:1.75;}
+
+/* ── PROGRAMME ── */
+.program-section{background:var(--dark);text-align:center;}
+.prog-grid{max-width:780px;margin:56px auto 0;}
+.prog-item{display:grid;grid-template-columns:90px 1fr;gap:0;text-align:left;border-bottom:1px solid rgba(200,149,42,0.1);padding:22px 0;transition:background 0.3s;}
+.prog-item:hover{background:rgba(200,149,42,0.03);}
+.prog-time{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);padding-top:3px;}
+.prog-act h4{font-family:'EB Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--white);margin-bottom:3px;}
+.prog-act p{font-size:0.92rem;color:var(--text-muted);font-style:italic;}
+.prog-highlight{background:rgba(200,149,42,0.06)!important;border-bottom:1px solid rgba(200,149,42,0.25)!important;}
+.prog-highlight .prog-time{color:var(--gold-light);}
+.prog-highlight .prog-act h4{color:var(--gold-pale);}
+
+/* ── REGISTER ── */
+.register-section{background:linear-gradient(135deg,var(--charcoal) 0%,rgba(30,80,89,0.3) 50%,var(--charcoal) 100%);text-align:center;position:relative;overflow:hidden;}
+.register-section::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(30,80,89,0.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.rsvp-counter{display:inline-flex;align-items:center;gap:12px;background:rgba(200,149,42,0.08);border:1px solid rgba(200,149,42,0.2);padding:10px 24px;margin-bottom:40px;font-family:'Raleway',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
+.rsvp-counter span{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold-light);}
+
+/* ── PRICING CARDS ── */
+.pricing-cards{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:40px 0;}
+.price-card{background:rgba(255,255,255,0.02);border:1px solid rgba(200,149,42,0.2);padding:32px 28px;min-width:220px;max-width:260px;text-align:center;cursor:pointer;transition:border-color 0.3s,transform 0.3s,background 0.3s;position:relative;}
+.price-card:hover{border-color:var(--gold);transform:translateY(-4px);}
+.price-card.selected{border-color:var(--gold-light);background:rgba(200,149,42,0.08);}
+.price-card.selected::after{content:'✓ Selected';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--dark);font-family:'Raleway',sans-serif;font-size:0.6rem;letter-spacing:2px;padding:3px 12px;font-weight:700;}
+.price-icon{font-size:2.2rem;margin-bottom:14px;}
+.price-label{font-family:'Raleway',sans-serif;font-size:0.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.price-amount{font-family:'Cinzel',serif;font-size:2rem;color:var(--white);margin-bottom:6px;}
+.price-amount span{font-size:0.9rem;color:var(--gold-light);}
+.price-desc{font-size:0.9rem;color:var(--text-muted);font-style:italic;line-height:1.5;}
+.price-combo{background:rgba(42,107,119,0.08);border-color:rgba(42,107,119,0.3);}
+.price-combo .price-label{color:var(--teal-mid);}
+.price-combo.selected{border-color:var(--teal-mid);background:rgba(42,107,119,0.12);}
+.price-combo.selected::after{background:var(--teal-mid);}
+
+/* ── FORM ── */
+.reg-form{max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:14px;position:relative;z-index:2;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.f-input{background:rgba(255,255,255,0.03);border:1px solid rgba(200,149,42,0.2);color:var(--text);padding:15px 20px;font-family:'EB Garamond',serif;font-size:1rem;outline:none;width:100%;transition:border-color 0.3s;}
+.f-input::placeholder{color:rgba(237,224,196,0.28);font-style:italic;}
+.f-input:focus{border-color:var(--gold);background:rgba(200,149,42,0.04);}
+.f-select{background:rgba(11,26,32,0.9);border:1px solid rgba(200,149,42,0.2);color:rgba(237,224,196,0.6);padding:15px 20px;font-family:'EB Garamond',serif;font-size:1rem;outline:none;width:100%;cursor:pointer;}
+.f-select:focus{border-color:var(--gold);}
+
+/* ── PAY BUTTON ── */
+.btn-pay{font-family:'Raleway',sans-serif;font-size:0.75rem;letter-spacing:4px;text-transform:uppercase;font-weight:600;padding:18px;background:linear-gradient(135deg,#1a7a3a,#2AAA55);color:#fff;border:none;cursor:pointer;width:100%;margin-top:6px;transition:transform 0.3s,box-shadow 0.3s;display:flex;align-items:center;justify-content:center;gap:12px;}
+.btn-pay:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(42,170,85,0.35);}
+.btn-pay:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+.mpesa-logo{background:#fff;border-radius:4px;padding:2px 8px;font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;color:#1a7a3a;letter-spacing:1px;}
+.form-note{font-size:0.88rem;font-style:italic;color:var(--text-muted);margin-top:6px;}
+.selected-amount{background:rgba(200,149,42,0.06);border:1px solid rgba(200,149,42,0.2);padding:12px 20px;text-align:center;font-family:'Cinzel',serif;color:var(--gold-light);font-size:1.1rem;display:none;}
+.selected-amount.show{display:block;}
+
+/* ── PAYMENT WAITING MODAL ── */
+.pay-modal{position:fixed;inset:0;z-index:9999;background:rgba(11,26,32,0.97);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s;}
+.pay-modal.show{opacity:1;pointer-events:all;}
+.pay-box{text-align:center;padding:56px 44px;max-width:480px;width:90%;border:1px solid rgba(200,149,42,0.3);background:var(--charcoal);position:relative;}
+.pay-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.pay-spinner{width:60px;height:60px;border:3px solid rgba(200,149,42,0.15);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 24px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.pay-box h3{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--gold-light);margin-bottom:12px;}
+.pay-box p{font-size:1rem;color:var(--text-muted);line-height:1.7;margin-bottom:8px;}
+.pay-phone-display{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--white);margin:16px 0;}
+.pay-steps{text-align:left;margin:20px 0;display:flex;flex-direction:column;gap:10px;}
+.pay-step{display:flex;gap:12px;align-items:flex-start;font-size:0.92rem;color:var(--text-muted);}
+.pay-step-num{background:rgba(200,149,42,0.15);color:var(--gold);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:0.75rem;flex-shrink:0;margin-top:2px;}
+.pay-timer{font-family:'Cinzel',serif;font-size:2rem;color:var(--gold);margin:16px 0;}
+.pay-cancel{font-family:'Raleway',sans-serif;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;cursor:pointer;margin-top:16px;text-decoration:underline;}
+.pay-cancel:hover{color:var(--text);}
+
+/* ── SUCCESS OVERLAY ── */
+.success-overlay{position:fixed;inset:0;z-index:9999;background:rgba(11,26,32,0.97);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.5s;}
+.success-overlay.show{opacity:1;pointer-events:all;}
+.success-box{text-align:center;padding:60px 50px;max-width:520px;border:1px solid rgba(200,149,42,0.3);background:var(--charcoal);position:relative;}
+.success-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.success-icon{font-size:3rem;margin-bottom:20px;display:block;}
+.success-box h2{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--gold-light);margin-bottom:16px;}
+.success-box p{font-size:1.1rem;line-height:1.8;color:var(--text-muted);margin-bottom:28px;}
+.success-name{color:var(--gold-pale);font-style:normal;}
+.success-mpesa{display:inline-block;background:rgba(42,122,75,0.15);border:1px solid rgba(42,122,75,0.3);padding:8px 20px;font-family:'Cinzel',serif;font-size:1rem;color:#3AAA6A;margin-bottom:20px;letter-spacing:2px;}
+.success-details{display:flex;gap:24px;justify-content:center;margin-bottom:32px;flex-wrap:wrap;}
+.success-detail{text-align:center;}
+.success-detail .icon{font-size:1.2rem;display:block;margin-bottom:6px;}
+.success-detail .lbl{font-family:'Raleway',sans-serif;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:3px;}
+.success-detail .val{font-size:0.95rem;color:var(--text);}
+
+/* ── ERROR TOAST ── */
+.err-toast{position:fixed;bottom:30px;right:30px;z-index:9999;background:var(--charcoal);border:1px solid var(--burnt);padding:20px 26px;max-width:320px;transform:translateX(160%);transition:transform 0.4s ease;}
+.err-toast.show{transform:translateX(0);}
+.err-toast h5{font-family:'Cinzel',serif;color:#E07050;margin-bottom:5px;font-size:0.95rem;}
+.err-toast p{font-size:0.88rem;color:var(--text-muted);line-height:1.5;}
+
+/* ── FOOTER ── */
+footer{padding:64px 56px 44px;background:#070F14;text-align:center;border-top:1px solid rgba(200,149,42,0.15);}
+.footer-brand{font-family:'Cinzel',serif;font-size:1.5rem;letter-spacing:8px;color:var(--gold);margin-bottom:8px;}
+.footer-pub{font-size:0.8rem;color:rgba(237,224,196,0.28);letter-spacing:2px;text-transform:uppercase;margin-bottom:36px;}
+.footer-socials{display:flex;justify-content:center;gap:18px;margin-bottom:36px;}
+.soc-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(200,149,42,0.2);display:flex;align-items:center;justify-content:center;color:var(--text-muted);text-decoration:none;font-size:0.9rem;transition:border-color 0.3s,color 0.3s,transform 0.3s;}
+.soc-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px);}
+.footer-contact{font-size:0.85rem;color:rgba(237,224,196,0.35);margin-bottom:20px;}
+.footer-contact a{color:rgba(200,149,42,0.6);text-decoration:none;}
+.footer-contact a:hover{color:var(--gold);}
+.footer-copy{font-size:0.72rem;color:rgba(237,224,196,0.2);letter-spacing:1px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:820px){
+  nav{padding:16px 24px;}
+  .nav-links,.nav-rsvp-btn{display:none;}
+  section{padding:72px 24px;}
+  .hero-content{padding:120px 24px 80px;}
+  .event-wrap,.about-wrap{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .cd-sep{display:none;}
+  .scroll-cue{left:24px;}
+  .hero-stats{gap:20px;}
+  .success-box,.pay-box{padding:40px 28px;margin:20px;}
+  .pricing-cards{gap:14px;}
+  .price-card{min-width:160px;padding:24px 18px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ──── NAV ──── -->
+<nav>
+  <div class="nav-brand">Beneath The Acacia</div>
+  <ul class="nav-links">
+    <li><a href="#event">Event</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#program">Programme</a></li>
+    <li><a href="#register">Register</a></li>
+  </ul>
+  <a href="#register" class="nav-rsvp-btn">RSVP Now</a>
+</nav>
+
+<!-- ──── HERO ──── -->
+<section class="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-bottom-fade"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">📖 Official Book Launch &nbsp;·&nbsp; 12 June 2026</p>
+    <h1 class="hero-title"><em>Presenting</em>Beneath<br>The Acacia</h1>
+    <p class="hero-author">— Reuben S. Nkinina —</p>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">A debut novel rooted in the lived experience, hopes, and struggles of the Maasai — a story that bridges generations and inspires change from within.</p>
+    <div class="hero-btns">
+      <a href="#register" class="btn-gold">Reserve Your Seat</a>
+      <a href="#about" class="btn-outline">About the Book</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-num">KES 500</span><span class="hstat-lbl">Entry Fee</span></div>
+      <div class="hstat"><span class="hstat-num">12</span><span class="hstat-lbl">June 2026</span></div>
+      <div class="hstat"><span class="hstat-num" id="stat-seats">∞</span><span class="hstat-lbl">Seats Left</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ──── COUNTDOWN ──── -->
+<section class="countdown-section" id="event">
+  <p class="s-label">Counting Down To</p>
+  <h2 class="s-title">The Launch Day</h2>
+  <p class="s-sub">Friday, 12th June 2026 &nbsp;·&nbsp; Esidai Hall, Kitengela</p>
+  <div class="cd-grid">
+    <div class="cd-block"><div class="cd-num" id="cd-days">000</div><div class="cd-lbl">Days</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block"><div class="cd-num" id="cd-hours">00</div><div class="cd-lbl">Hours</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block"><div class="cd-num" id="cd-mins">00</div><div class="cd-lbl">Minutes</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block"><div class="cd-num" id="cd-secs">00</div><div class="cd-lbl">Seconds</div></div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ──── EVENT DETAILS ──── -->
+<section class="event-section">
+  <div class="event-wrap">
+    <div>
+      <p class="s-label">The Event</p>
+      <h2 class="s-title">Mark Your<br>Calendar</h2>
+      <div class="event-details-list">
+        <div class="ev-item"><div class="ev-icon">📅</div><div class="ev-text"><h4>Date</h4><p>Friday, 12th June 2026</p></div></div>
+        <div class="ev-item"><div class="ev-icon">📍</div><div class="ev-text"><h4>Venue</h4><p>Esidai Hall</p><p class="sub">Kitengela, Kajiado County, Kenya</p></div></div>
+        <div class="ev-item"><div class="ev-icon">🕙</div><div class="ev-text"><h4>Time</h4><p>10:00 AM — 4:00 PM (EAT)</p><p class="sub">Doors open at 9:30 AM</p></div></div>
+        <div class="ev-item"><div class="ev-icon">🎟️</div><div class="ev-text"><h4>Entry Fee</h4><p>KES 500 per person</p><p class="sub">Pay via M-Pesa · Seat confirmed on payment</p></div></div>
+        <div class="ev-item"><div class="ev-icon">📚</div><div class="ev-text"><h4>Book Price</h4><p>KES 2,000 per copy</p><p class="sub">Pre-order + entry combo available — KES 2,000</p></div></div>
+        <div class="ev-item"><div class="ev-icon">🏢</div><div class="ev-text"><h4>Publisher</h4><p>Elong'o Publishers</p><p class="sub">"The Ambit of Thoughts"</p></div></div>
+      </div>
+    </div>
+    <div class="book-mockup">
+      <div class="book-img-wrap">
+        <div class="book-glow"></div>
+        <div class="book-cover">
+          <div class="book-tree">🌳</div>
+          <div class="book-title-cover">Beneath<br>The Acacia</div>
+          <div class="book-sub-cover">A debut novel of the<br>Maasai experience</div>
+          <div class="book-author-cover">Reuben S. Nkinina</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ──── ABOUT ──── -->
+<section class="about-section" id="about">
+  <div class="about-wrap">
+    <div class="author-card">
+      <div class="author-avatar">🧑🏾</div>
+      <h4>Reuben S. Nkinina</h4>
+      <p>Maasai author, youth leader, and human rights advocate from Empuyiankat, Kenya. Founder of the Naresho Youth Initiative — empowering pastoralist communities through education, cultural inclusion, and social justice.</p>
+    </div>
+    <div class="about-text">
+      <p class="s-label">The Story</p>
+      <h2 class="s-title" style="text-align:left;margin-bottom:30px;">A Novel Born<br>Beneath the Savanna Sky</h2>
+      <p><em>Beneath the Acacia</em> is a debut novel drawn from the lived experiences, hopes, and quiet struggles within Maasai life.</p>
+      <blockquote>"Through storytelling, Reuben seeks to bridge generations, honor tradition, and inspire change from within."</blockquote>
+      <p>Set against the vast golden landscape of the Kenyan savanna, the novel weaves together themes of identity, belonging, and the revolutions that happen when tradition meets the hunger for justice.</p>
+      <p>Reuben is a passionate defender of girls' rights and a committed champion of Maasai heritage. His advocacy focuses on ending harmful practices such as early marriage and FGM, while promoting access to education for all in rural and indigenous communities.</p>
+      <p>This is more than a book. It is a declaration of dignity, a love letter to a people, and an invitation for the world to listen.</p>
+      <div style="margin-top:36px;"><a href="#register" class="btn-gold">Join the Launch</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ──── PROGRAMME ──── -->
+<section class="program-section" id="program">
+  <p class="s-label">Event Schedule</p>
+  <h2 class="s-title">Programme of the Day</h2>
+  <p class="s-sub">12th June 2026 &nbsp;·&nbsp; Esidai Hall, Kitengela</p>
+  <div class="prog-grid">
+    <div class="prog-item"><div class="prog-time">9:30</div><div class="prog-act"><h4>Arrivals &amp; Registration</h4><p>Guests welcomed with Maasai cultural display and refreshments</p></div></div>
+    <div class="prog-item"><div class="prog-time">10:00</div><div class="prog-act"><h4>Official Opening</h4><p>Welcome address, prayers, and cultural invocation</p></div></div>
+    <div class="prog-item"><div class="prog-time">10:30</div><div class="prog-act"><h4>Keynote Address</h4><p>Literature, identity and the power of indigenous voices</p></div></div>
+    <div class="prog-item"><div class="prog-time">11:00</div><div class="prog-act"><h4>The Author's Journey</h4><p>Reuben S. Nkinina speaks on writing <em>Beneath the Acacia</em></p></div></div>
+    <div class="prog-item"><div class="prog-time">11:30</div><div class="prog-act"><h4>Book Reading &amp; Excerpt</h4><p>Live reading from the debut novel</p></div></div>
+    <div class="prog-item prog-highlight"><div class="prog-time">12:00</div><div class="prog-act"><h4>✦ Official Book Launch</h4><p>Unveiling and signing ceremony — the moment we have all waited for</p></div></div>
+    <div class="prog-item"><div class="prog-time">12:30</div><div class="prog-act"><h4>Lunch &amp; Networking</h4><p>Enjoy a shared meal while connecting with fellow guests</p></div></div>
+    <div class="prog-item"><div class="prog-time">14:00</div><div class="prog-act"><h4>Panel Discussion</h4><p>Girls' rights, Maasai culture, and the future of indigenous literature</p></div></div>
+    <div class="prog-item"><div class="prog-time">15:00</div><div class="prog-act"><h4>Book Sales &amp; Signings</h4><p>Meet the author and get your personal signed copy</p></div></div>
+    <div class="prog-item"><div class="prog-time">15:45</div><div class="prog-act"><h4>Cultural Performances</h4><p>Maasai music, song, and dance to close the celebration</p></div></div>
+    <div class="prog-item"><div class="prog-time">16:00</div><div class="prog-act"><h4>Closing Remarks</h4><p>Vote of thanks and farewell blessing</p></div></div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ──── REGISTER ──── -->
+<section class="register-section" id="register">
+  <p class="s-label">Secure Your Place</p>
+  <h2 class="s-title">Register to Attend</h2>
+  <p class="s-sub">Pay via M-Pesa and receive instant confirmation</p>
+
+  <div style="margin-top:28px;">
+    <div class="rsvp-counter">
+      <span id="rsvp-count">0</span>&nbsp;guests registered so far
+    </div>
+  </div>
+
+  <!-- PRICING OPTIONS -->
+  <div class="pricing-cards">
+    <div class="price-card" id="card-entry" onclick="selectPayment('entry')">
+      <div class="price-icon">🎟️</div>
+      <div class="price-label">Entry Only</div>
+      <div class="price-amount"><span>KES </span>500</div>
+      <div class="price-desc">Gate fee · Attend the launch event</div>
+    </div>
+    <div class="price-card" id="card-book" onclick="selectPayment('book')">
+      <div class="price-icon">📚</div>
+      <div class="price-label">Book Only</div>
+      <div class="price-amount"><span>KES </span>2,000</div>
+      <div class="price-desc">Pre-order your signed copy of Beneath The Acacia</div>
+    </div>
+    <div class="price-card price-combo" id="card-combo" onclick="selectPayment('combo')">
+      <div class="price-icon">✨</div>
+      <div class="price-label">Entry + Book</div>
+      <div class="price-amount"><span>KES </span>2,000</div>
+      <div class="price-desc">Best value · Entry fee waived when you buy the book</div>
+    </div>
+  </div>
+
+  <div class="selected-amount" id="selectedAmountDisplay"></div>
+
+  <form class="reg-form" id="rsvpForm" onsubmit="handlePay(event)" novalidate>
+    <div class="form-row">
+      <input type="text" class="f-input" id="firstName" placeholder="First Name *" required>
+      <input type="text" class="f-input" id="lastName"  placeholder="Last Name *"  required>
+    </div>
+    <input type="email" class="f-input" id="guestEmail" placeholder="Email Address *" required>
+    <input type="tel"   class="f-input" id="guestPhone" placeholder="M-Pesa Phone Number * (07XXXXXXXX)" required>
+    <input type="text"  class="f-input" id="guestOrg"   placeholder="Organisation / Community (optional)">
+    <select class="f-select" id="guestSource">
+      <option value="" disabled selected>How did you hear about this event?</option>
+      <option>Social Media</option>
+      <option>Word of Mouth</option>
+      <option>Naresho Youth Initiative</option>
+      <option>Elong'o Publishers</option>
+      <option>Community / Church</option>
+      <option>Newspaper / Radio</option>
+      <option>Other</option>
+    </select>
+    <button type="submit" class="btn-pay" id="submitBtn">
+      <span class="mpesa-logo">M-PESA</span>
+      <span id="btnText">Select a payment option above</span>
+    </button>
+    <p class="form-note">* An STK Push will be sent to your M-Pesa phone. Enter your PIN to confirm. You will receive a confirmation email after payment.</p>
+  </form>
+</section>
+
+<!-- ──── FOOTER ──── -->
+<div class="gold-rule"></div>
+<footer>
+  <div class="footer-brand">Beneath The Acacia</div>
+  <p class="footer-pub">Published by Elong'o Publishers · "The Ambit of Thoughts"</p>
+  <div class="footer-socials">
+    <a href="#" class="soc-btn" title="Facebook">f</a>
+    <a href="#" class="soc-btn" title="X / Twitter">𝕏</a>
+    <a href="#" class="soc-btn" title="Instagram">✦</a>
+    <a href="#" class="soc-btn" title="WhatsApp">W</a>
+  </div>
+  <p class="footer-contact">
+    Enquiries: <a href="mailto:nareshoyouth@gmail.com">nareshoyouth@gmail.com</a>
+    &nbsp;·&nbsp; Naresho Youth Initiative, Empuyiankat, Kajiado County
+  </p>
+  <p class="footer-copy">© 2026 Reuben S. Nkinina · Elong'o Publishers · Esidai Hall, Kitengela · 12 June 2026</p>
+</footer>
+
+<!-- ──── PAYMENT WAITING MODAL ──── -->
+<div class="pay-modal" id="payModal">
+  <div class="pay-box">
+    <div class="pay-spinner"></div>
+    <h3>Check Your Phone</h3>
+    <p>An M-Pesa prompt has been sent to:</p>
+    <div class="pay-phone-display" id="modalPhone">07XX XXX XXX</div>
+    <div class="pay-steps">
+      <div class="pay-step"><div class="pay-step-num">1</div><span>A pop-up will appear on your phone</span></div>
+      <div class="pay-step"><div class="pay-step-num">2</div><span>Enter your M-Pesa PIN to confirm</span></div>
+      <div class="pay-step"><div class="pay-step-num">3</div><span>Wait for confirmation — do not close this page</span></div>
+    </div>
+    <div class="pay-timer" id="payTimer">2:00</div>
+    <p style="font-size:0.85rem;">Waiting for payment confirmation…</p>
+    <button class="pay-cancel" onclick="cancelPayment()">Cancel &amp; Go Back</button>
+  </div>
+</div>
+
+<!-- ──── SUCCESS OVERLAY ──── -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <span class="success-icon">✦</span>
+    <h2>You're Confirmed!</h2>
+    <p>Thank you, <strong class="success-name" id="successName">Guest</strong>! Your payment was received and your place is secured.</p>
+    <div class="success-mpesa" id="successMpesa">M-Pesa Code: ––</div>
+    <div class="success-details">
+      <div class="success-detail"><span class="icon">📅</span><span class="lbl">Date</span><span class="val">12 June 2026</span></div>
+      <div class="success-detail"><span class="icon">📍</span><span class="lbl">Venue</span><span class="val">Esidai Hall, Kitengela</span></div>
+      <div class="success-detail"><span class="icon">🕙</span><span class="lbl">Time</span><span class="val">10:00 AM EAT</span></div>
+    </div>
+    <p style="font-size:0.9rem;margin-bottom:28px;">A confirmation email has been sent to your inbox. Please keep your M-Pesa receipt as your entry ticket.</p>
+    <button class="btn-gold" onclick="closeSuccess()" style="font-size:0.65rem;letter-spacing:3px;border:none;cursor:pointer;">
+      Back to Page
+    </button>
+  </div>
+</div>
+
+<!-- ──── ERROR TOAST ──── -->
+<div class="err-toast" id="errToast">
+  <h5>⚠ Error</h5>
+  <p id="errMsg">Something went wrong. Please try again.</p>
+</div>
+
+<!-- ──── SCRIPTS ──── -->
+<script>
+/* ── Countdown ── */
+function tick(){
+  const target = new Date('2026-06-12T10:00:00+03:00');
+  const diff = target - new Date();
+  if(diff <= 0) return;
+  document.getElementById('cd-days').textContent  = String(Math.floor(diff/864e5)).padStart(3,'0');
+  document.getElementById('cd-hours').textContent = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
+  document.getElementById('cd-mins').textContent  = String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
+  document.getElementById('cd-secs').textContent  = String(Math.floor((diff%6e4)/1e3)).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
+
+/* ── RSVP Counter ── */
+let rsvpCount = parseInt(localStorage.getItem('rsvpCount') || '0');
+function updateCounter(){ document.getElementById('rsvp-count').textContent = rsvpCount; }
+updateCounter();
+
+/* ── Payment Selection ── */
+const PRICES = { entry: 500, book: 2000, combo: 2000 };
+const LABELS = { entry: 'Entry — KES 500', book: 'Book Pre-order — KES 2,000', combo: 'Entry + Book — KES 2,000' };
+let selectedType = null;
+let pollInterval = null;
+let timerInterval = null;
+
+function selectPayment(type) {
+  selectedType = type;
+  document.querySelectorAll('.price-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('card-' + type).classList.add('selected');
+  const display = document.getElementById('selectedAmountDisplay');
+  display.textContent = '→ ' + LABELS[type];
+  display.classList.add('show');
+  document.getElementById('btnText').textContent = 'Pay ' + LABELS[type] + ' via M-Pesa';
+}
+
+/* ── Handle Pay ── */
+async function handlePay(e) {
+  e.preventDefault();
+  if (!selectedType) { showError('Please select a payment option (Entry, Book, or Combo).'); return; }
+
+  const btn       = document.getElementById('submitBtn');
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName  = document.getElementById('lastName').value.trim();
+  const email     = document.getElementById('guestEmail').value.trim();
+  const phone     = document.getElementById('guestPhone').value.trim();
+  const org       = document.getElementById('guestOrg').value.trim();
+  const source    = document.getElementById('guestSource').value;
+
+  if (!firstName || !lastName || !email || !phone) {
+    showError('Please fill in all required fields.'); return;
+  }
+  if (!email.includes('@')) { showError('Please enter a valid email address.'); return; }
+  if (!/^(07|2547|\+2547)\d{8}$/.test(phone.replace(/\s/g,''))) {
+    showError('Please enter a valid Safaricom number (07XXXXXXXX).'); return;
+  }
+
+  btn.disabled = true;
+  document.getElementById('btnText').textContent = 'Initiating payment…';
+
+  try {
+    const res = await fetch(`${API_BASE}/mpesa/stkpush`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phone, firstName, lastName, email,
+        amount: PRICES[selectedType],
+        itemType: selectedType,
+        org: org || 'Not provided',
+        source: source || 'Not specified',
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      showPayModal(phone, data.checkoutRequestId, firstName, lastName, email, org, source);
+    } else {
+      showError(data.error || 'Payment initiation failed. Please try again.');
+    }
+  } catch(err) {
+    console.error(err);
+    showError('Could not connect to payment server. Please try again or contact nareshoyouth@gmail.com');
+  } finally {
+    btn.disabled = false;
+    document.getElementById('btnText').textContent = 'Pay ' + LABELS[selectedType] + ' via M-Pesa';
+  }
+}
+
+/* ── Show Payment Modal & Poll ── */
+function showPayModal(phone, checkoutId, firstName, lastName, email, org, source) {
+  document.getElementById('modalPhone').textContent = phone;
+  document.getElementById('payModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  // Countdown timer (2 minutes)
+  let seconds = 120;
+  const timerEl = document.getElementById('payTimer');
+  timerInterval = setInterval(() => {
+    seconds--;
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    timerEl.textContent = `${m}:${String(s).padStart(2,'0')}`;
+    if (seconds <= 0) { clearInterval(timerInterval); cancelPayment(); }
+  }, 1000);
+
+  // Poll backend every 3 seconds
+  pollInterval = setInterval(async () => {
+    try {
+      const res  = await fetch(`${API_BASE}/mpesa/status/${checkoutId}`);
+      const data = await res.json();
+
+      if (data.status === 'success') {
+        clearInterval(pollInterval);
+        clearInterval(timerInterval);
+        closePayModal();
+        onPaymentSuccess(firstName, lastName, email, data.mpesaCode, org, source);
+      } else if (data.status === 'failed') {
+        clearInterval(pollInterval);
+        clearInterval(timerInterval);
+        closePayModal();
+        showError('Payment was not completed. Please try again.');
+      }
+    } catch(err) { /* network hiccup — keep polling */ }
+  }, 3000);
+}
+
+function closePayModal() {
+  document.getElementById('payModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function cancelPayment() {
+  clearInterval(pollInterval);
+  clearInterval(timerInterval);
+  closePayModal();
+}
+
+/* ── On Payment Success ── */
+async function onPaymentSuccess(firstName, lastName, email, mpesaCode, org, source) {
+  // Send confirmation email via EmailJS
+  const now = new Date().toLocaleString('en-KE',{ timeZone:'Africa/Nairobi', dateStyle:'full', timeStyle:'short' });
+  const params = {
+    from_name:  `${firstName} ${lastName}`,
+    from_email: email,
+    phone:      document.getElementById('guestPhone').value.trim(),
+    org:        org || 'Not provided',
+    source:     source || 'Not specified',
+    time:       now,
+    reply_to:   email,
+    mpesa_code: mpesaCode || 'N/A',
+    item_type:  LABELS[selectedType] || selectedType,
+  };
+
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
+  } catch(err) {
+    console.warn('Email send failed but payment succeeded:', err);
+  }
+
+  // Update counter
+  rsvpCount++;
+  localStorage.setItem('rsvpCount', rsvpCount);
+  updateCounter();
+
+  // Show success
+  document.getElementById('successName').textContent = firstName;
+  document.getElementById('successMpesa').textContent = mpesaCode ? `M-Pesa Code: ${mpesaCode}` : 'Payment confirmed ✓';
+  document.getElementById('successOverlay').classList.add('show');
+  document.getElementById('rsvpForm').reset();
+  selectedType = null;
+  document.querySelectorAll('.price-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('selectedAmountDisplay').classList.remove('show');
+  document.getElementById('btnText').textContent = 'Select a payment option above';
+}
+
+function closeSuccess() {
+  document.getElementById('successOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function showError(msg) {
+  const t = document.getElementById('errToast');
+  document.getElementById('errMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 7000);
+}
+
+/* ── Scroll fade-in ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.ev-item,.prog-item,.cd-block,.author-card,.rsvp-counter,.price-card').forEach(el => {
+  el.style.opacity='0'; el.style.transform='translateY(18px)';
+  el.style.transition='opacity 0.65s ease, transform 0.65s ease';
+  io.observe(el);
+});
+</script>
+</body>
+</html>
